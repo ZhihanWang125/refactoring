@@ -14,6 +14,10 @@ public class StatementPrinter {
         this.statementData = new StatementData(invoice, plays);
     }
 
+    public StatementData getStatementData() {
+        return statementData;
+    }
+
     /**
      * Returns a formatted statement of the invoice associated with this printer.
      *
@@ -68,7 +72,7 @@ public class StatementPrinter {
         return volumeCredits + result;
     }
 
-    private static String usd(int totalAmount) {
+    protected static String usd(int totalAmount) {
         final NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
         return frmt.format(totalAmount / Constants.PERCENT_FACTOR);
     }
