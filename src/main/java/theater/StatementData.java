@@ -23,7 +23,6 @@ public class StatementData {
     private PerformanceData createPerformanceData(Performance performance, Play play) {
         final AbstractPerformanceCalculator calculator =
                 AbstractPerformanceCalculator.createPerformanceCalculator(performance, play);
-
         return new PerformanceData(
                 performance,
                 play,
