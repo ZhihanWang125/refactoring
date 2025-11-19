@@ -6,10 +6,14 @@ package theater;
 public class PerformanceData {
     private final Performance performance;
     private final Play play;
+    private final int amount;
+    private final int volumeCredits;
 
-    public PerformanceData(Performance performance, Play play) {
+    public PerformanceData(Performance performance, Play play, int amount, int volumeCredits) {
         this.performance = performance;
         this.play = play;
+        this.amount = amount;
+        this.volumeCredits = volumeCredits;
     }
 
     public Performance getPerformance() {
@@ -28,12 +32,20 @@ public class PerformanceData {
         return play.getType();
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public int getVolumeCredits() {
+        return volumeCredits;
+    }
+
     /**
-     * Returns an int of amount fot either comedy or tragedy.
-     *
-     * @return the formatted statement
-     * @throws RuntimeException if one of the play types is not known
+     * Get the amount of credits of case comedy.
+     * @return the int volume credits
+     * @throws RuntimeException when case is neither tragedy nor comedy
      */
+
     public int amountFor() {
         int result = 0;
         switch (play.getType()) {
@@ -54,7 +66,7 @@ public class PerformanceData {
                 result += Constants.COMEDY_AMOUNT_PER_AUDIENCE * performance.getAudience();
                 break;
             default:
-                throw new RuntimeException(String.format("unknown type: %s", play.getType()));
+                throw new RuntimeException("unknown type: " + play.getType());
         }
         return result;
     }

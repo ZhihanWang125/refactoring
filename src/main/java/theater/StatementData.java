@@ -9,36 +9,35 @@ import java.util.Map;
  */
 public class StatementData {
     private String customer;
-    private List<PerformanceData> performances = new ArrayList<>();
+    private final List<PerformanceData> performances = new ArrayList<>();
 
     public StatementData(Invoice invoice, Map<String, Play> plays) {
         this.customer = invoice.getCustomer();
-        // populate PerformanceData list
+
         for (Performance p : invoice.getPerformances()) {
             final Play play = plays.get(p.getPlayID());
-            this.performances.add(new PerformanceData(p, play));
+            this.performances.add(createPerformanceData(p, play));
         }
     }
 
     private PerformanceData createPerformanceData(Performance performance, Play play) {
-        AbstractPerformanceCalculator.createPerformanceCalculator(performance, play);
-        return new PerformanceData(performance, play);
+        final AbstractPerformanceCalculator calculator =
+                AbstractPerformanceCalculator.createPerformanceCalculator(performance, play);
+
+        return new PerformanceData(
+                performance,
+                play,
+                calculator.amount(),
+                calculator.volumeCredits()
+        );
     }
 
     public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
     public List<PerformanceData> getPerformances() {
         return performances;
-    }
-
-    public void setPerformances(List<PerformanceData> performances) {
-        this.performances = performances;
     }
 
     /**
@@ -49,7 +48,7 @@ public class StatementData {
     public int totalAmount() {
         int total = 0;
         for (PerformanceData p : performances) {
-            total += p.amountFor();
+            total += p.getAmount();
         }
         return total;
     }
@@ -58,14 +57,12 @@ public class StatementData {
      * Returns an int of volume credit.
      *
      * @return the formatted statement
+     *
      */
     public int volumeCredits() {
         int volumeCredits = 0;
-        for (PerformanceData performanceData : getPerformances()) {
-            volumeCredits += Math.max(performanceData.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
-            if ("comedy".equals(performanceData.getType())) {
-                volumeCredits += performanceData.getAudience() / Constants.COMEDY_EXTRA_VOLUME_FACTOR;
-            }
+        for (PerformanceData p : performances) {
+            volumeCredits += p.getVolumeCredits();
         }
         return volumeCredits;
     }
