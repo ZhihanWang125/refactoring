@@ -27,6 +27,10 @@ public abstract class AbstractPerformanceCalculator {
                 return new TragedyCalculator(performance, play);
             case "comedy":
                 return new ComedyCalculator(performance, play);
+            case "pastoral":
+                return new PastoralCalculator(performance, play);
+            case "history":
+                return new HistoryCalculator(performance, play);
             default:
                 throw new RuntimeException("unknown type: " + play.getType());
         }

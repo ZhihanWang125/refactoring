@@ -42,7 +42,7 @@ public class HTMLStatementPrinter extends StatementPrinter {
                     " <tr><td>%s</td><td>%d</td><td>%s</td></tr>%n",
                     perfData.getPlay().getName(),
                     perfData.getAudience(),
-                    usd(perfData.amountFor())
+                    usd(perfData.getAmount())
             ));
         }
 

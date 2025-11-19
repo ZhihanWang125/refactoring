@@ -37,7 +37,7 @@ public class StatementPrinter {
 
         for (PerformanceData performanceData : statementData.getPerformances()) {
             final Play play = performanceData.getPlay();
-            final int thisAmount = performanceData.amountFor();
+            final int thisAmount = performanceData.getAmount();
             result.append(String.format("  %s: %s (%s seats)%n",
                     play.getName(), usd(thisAmount), performanceData.getAudience()));
         }
@@ -49,7 +49,7 @@ public class StatementPrinter {
     private int getTotalAmount() {
         int totalAmount = 0;
         for (PerformanceData performanceData : statementData.getPerformances()) {
-            totalAmount += performanceData.amountFor();
+            totalAmount += performanceData.getAmount();
         }
         return totalAmount;
     }
