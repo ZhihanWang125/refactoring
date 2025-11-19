@@ -28,6 +28,24 @@ public class StatementPrinter {
         return renderPlainText();
     }
 
+    /**
+     * Returns the amount of performance.
+     * @param performanceData is theater.performancedata
+     * @return the corresponding int
+     */
+    public int getAmount(PerformanceData performanceData) {
+        return performanceData.getAmount();
+    }
+
+    /**
+     * Returns the play of performance.
+     * @param performanceData is theater.performancedata
+     * @return the corresponding play
+     */
+    public Play getPlay(PerformanceData performanceData) {
+        return performanceData.getPlay();
+    }
+
     private String renderPlainText() {
         final StringBuilder result = new StringBuilder("Statement for "
                 + statementData.getCustomer()
