@@ -20,6 +20,11 @@ public class StatementData {
         }
     }
 
+    private PerformanceData createPerformanceData(Performance performance, Play play) {
+        AbstractPerformanceCalculator.createPerformanceCalculator(performance, play);
+        return new PerformanceData(performance, play);
+    }
+
     public String getCustomer() {
         return customer;
     }
